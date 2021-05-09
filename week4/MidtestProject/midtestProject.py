@@ -16,22 +16,14 @@ class WindowClass(QMainWindow, form_class) :#윈도우 클래스 선언
         self.setupUi(self)
 
     #-----------여기서부터---------------------#
-    def printForCheck(self):
-        return (self.calendarWidget.firstDayOfWeek)
-
-    def clickDate(self):
-        return 0;
-
-    #def 
+        
     #---------------여기까지---------------------#
         
 
 if __name__ == "__main__" :#메인 함수 선언
-    
     app = QApplication(sys.argv)
     myWindow = WindowClass()
     myWindow.show()
-    print(type(myWindow.printForCheck()))
     app.exec_()
 
 #달력 UI
