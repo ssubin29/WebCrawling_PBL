@@ -1,5 +1,3 @@
-
-
 import time
 import random
 import sys
@@ -40,7 +38,7 @@ if __name__ == "__main__" :#메인 함수 선언
     app = QApplication(sys.argv)
     myWindow = WindowClass()
     myWindow.show()
-    printC(takeCrawling())
+    #printC(takeCrawling())
     app.exec_()
 
 #달력 UI
