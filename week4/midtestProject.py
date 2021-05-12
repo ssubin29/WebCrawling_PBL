@@ -3,11 +3,14 @@ import random
 import sys
 import webbrowser
 import requests
-from bs4 import BeautifulSoup
+import openpyxl
 
 from PyQt5 import uic
 from PyQt5.QtWidgets import QApplication, QMainWindow
 from PyQt5.QtGui import *
+
+#엑셀 파일에서 사용할 상수 선언
+FULL_DATE=0; YEAR=1; MONTH=2; DAY=3; MONEY=4;
 
 #UI 파일 연결하기
 form_class = uic.loadUiType("midtestProjectUI.ui")[0]
@@ -18,27 +21,43 @@ class WindowClass(QMainWindow, form_class) :#윈도우 클래스 선언
         self.setupUi(self)
 
     #-----------여기서부터---------------------#
-    def takeCrawling():
-        exchange_rate={}
-        for page_num in range(10):
-            res = requests.get
-            ('https://finance.naver.com/marketindex/exchangeDailyQuote.nhn?marketindexCd=FX_USDKRW&page=' + str(page_num + 1))
-            soup = BeautifulSoup(res.content, 'html.parser')
-            data = soup.select('table.tbl_exchange.today tbody tr')
-            for item in data:
-                exchange_rate[item.find('td',{'class':'date'}).get_text().strip()] = float(item.find('td',{'class':'num'}).get_text().strip().replace(',',''))   
-        print(exchange_rate)
+        self.inputBtn.clicked.connect(self.inputBtnClick)
+        #self.dateLabel
+        #self.calendar = QCalendarWidget(self)
+        #self.calender.selectionChanged.connect(self.calendar_change)
+
+    def inputBtnClick(self):
+        colorBackground(self.degreeInput.value())
+        
+    def loadData(self): #엑셀에 담겨있는 날짜와 원화 데이터 가져오기 
+        excel_file = openpyxl.load_workbook('data.xlsx')
+        excel_sheet = excel_file.active
+
+        global date_dict
+        date_dict={}
+
+        for row in excel_sheet.rows:
+            date_dict[row[FULL_DATE].value]={int(row[YEAR].value),int(row[MONTH].value),int(row[DAY].value),float(row[MONEY].value)}
+        
+        excel_file.close()
+
+    def colorBackground(data):
+        format=QTextCharFormat()
+        for date in date_dict.keys():
+            if data_dict[date][MONEY-1]<data : format.setBackground(QBrush(QColor(Qt.Blue)))
+            else : format.setBackground(QBrush(QColor(Qt.Red)))
+            date=QDate(data_dict[date][YEAR-1],data_dict[date][MONTH-1],data_dict[date][DAY-1])
+            self.calendar.setDateTextFormat(date, format)
     
-    def printC(self,**er):
-        print(er)
     #---------------여기까지---------------------#
         
 
 if __name__ == "__main__" :#메인 함수 선언
     app = QApplication(sys.argv)
     myWindow = WindowClass()
+    myWindow.loadData()
     myWindow.show()
-    #printC(takeCrawling())
+    a=input()
     app.exec_()
 
 #달력 UI
