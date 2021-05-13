@@ -1,4 +1,3 @@
-import random
 import sys
 import webbrowser
 import requests
@@ -13,7 +12,7 @@ from PyQt5.QtCore import *
 #엑셀 파일에서 사용할 상수 선언
 FULL_DATE=0; YEAR=1; MONTH=2; DAY=3; MONEY=4;
 
-#UI 파일 연결하기
+#PyQt5 designer에서 만든 UI 파일 연결하기
 form_class = uic.loadUiType("midtestProjectUI.ui")[0]
 
 class WindowClass(QMainWindow, form_class) :#윈도우 클래스 선언
@@ -22,6 +21,8 @@ class WindowClass(QMainWindow, form_class) :#윈도우 클래스 선언
         self.setupUi(self)
     #-----------여기서부터---------------------#
         self.inputBtn.clicked.connect(self.inputBtnClick)        
+        #inputBtn이라는 객체를 눌렀을 때, inputBtnClick이라는 함수가 작동하도록
+        #clicked.connect를 통해 연결한다.
 
     def inputBtnClick(self):
         self.colorBackground(self.degreeInput.value())
@@ -65,7 +66,3 @@ if __name__ == "__main__" :#메인 함수 선언
     myWindow.show()
     app.exec_()
 
-#달력 UI
-#오늘 날짜는 Bold 또는 눈에 보이는 방식으로
-#날짜 클릭했을때 팝업창 (토스트메세지로 환율
-#input창으로 숫자입력 후 함수호출 시 날짜마다 색변환
