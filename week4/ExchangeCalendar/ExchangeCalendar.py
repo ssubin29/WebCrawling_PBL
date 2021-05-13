@@ -13,7 +13,7 @@ from PyQt5.QtCore import *
 FULL_DATE=0; YEAR=1; MONTH=2; DAY=3; MONEY=4;
 
 #PyQt5 designer에서 만든 UI 파일 연결하기
-form_class = uic.loadUiType("midtestProjectUI.ui")[0]
+form_class = uic.loadUiType("ExchangeCalendar.ui")[0]
 
 class WindowClass(QMainWindow, form_class) :#윈도우 클래스 선언
     def __init__(self) :
